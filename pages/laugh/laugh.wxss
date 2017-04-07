@@ -5,9 +5,9 @@ page{
     text-align: center;
 }
 .refresh{
-    width: 80rpx;
-    height: 80rpx;
-    border-radius: 80rpx;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
     overflow: hidden;
     background-color: #fff;
     z-index: 999999;
@@ -18,10 +18,11 @@ page{
 }
 .refresh image{
     display: block;
-    width: 60rpx;
-    height: 60rpx;
-    margin-top: 10rpx;
-    margin-left: 10rpx;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    left: 5px;
+    top: 5px;
 }
 .nav{
     width: 500rpx;
@@ -31,21 +32,39 @@ page{
     left: 125rpx;
     background-color: #fff;
     z-index: 99999;
-    display: flex;
+    /*display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-around;*/
     border-radius: 50rpx;
     box-shadow: 0 0 10px #007aff;
 }
+.nav .nav-bar{
+    width: 50%;
+    height: 50rpx;
+    background-color: #007aff;
+    border-radius: 50rpx;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all 0.5s;
+}
+/*.nav .nav-bar.left{
+    left:0;
+}
+.nav .nav-bar.right{
+    left:50%;
+}*/
 .nav .nav-button{
     width: 50%;
     height: 50rpx;
     line-height: 50rpx;
     transition: all 0.5s;
+    float: left;
 }
 .nav .nav-button.active{
-    background-color: #007aff;
-    border-radius: 50rpx;
+    /*background-color: #007aff;
+    border-radius: 50rpx;*/
 }
 .wrap{
     width: 100%;

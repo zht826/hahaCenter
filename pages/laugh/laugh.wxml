@@ -1,6 +1,7 @@
 <view class="nav">
     <view class="nav-button {{activeId == '0'?'active':''}}" id="0" bindtap="changeActive">文字</view>
-    <view class="nav-button {{activeId == '1'?'active':''}}" id="1" bindtap="changeActive">图片</view>    
+    <view class="nav-button {{activeId == '1'?'active':''}}" id="1" bindtap="changeActive">图片</view>
+    <view class="nav-bar" animation="{{barAnimationData}}" ></view>
 </view>
 <view class="refresh" animation="{{animationData}}" bindtap="refresh" style="transform:rotate({{rtDeg}}deg);">
     <image src="../../img/jt.png"></image>
