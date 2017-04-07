@@ -1,0 +1,7 @@
+<view class="module" wx:for="{{moduleData}}">
+    <navigator url="{{item.url}}">
+        <image class="icon" src="{{item.iconUrl}}"></image>
+        <view class="title">{{item.title}}</view>
+    </navigator>
+</view>
+

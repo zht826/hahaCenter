@@ -1,0 +1,48 @@
+<view class="nav">
+    <view class="nav-button {{activeId == '0'?'active':''}}" id="0" bindtap="changeActive">文字</view>
+    <view class="nav-button {{activeId == '1'?'active':''}}" id="1" bindtap="changeActive">图片</view>    
+</view>
+<view class="refresh" animation="{{animationData}}" bindtap="refresh" style="transform:rotate({{rtDeg}}deg);">
+    <image src="../../img/jt.png"></image>
+</view>
+<swiper style="height: 100%;" current="{{slideIndex}}" bindchange='changeSlide'>
+    <swiper-item>
+        <scroll-view scroll-y="true" style="height: 100%;" scroll-top="{{scrollTop}}">
+            <view class="wrap">
+                <view class="item" wx:for="{{textModuleData}}">
+                    <navigator url="{{item.url}}">
+                        <view class="top">
+                            <view class="title">{{item.title}}</view>
+                            <view class="time">{{item.time}}</view>
+                        </view>
+                        <view class="content">
+                            <image id="{{index}}" class="icon" bindload='imgSuc' src="{{item.iconUrl}}" style="width:{{item.width}}px;height:{{item.height}}px"></image>
+                            <view class="text">{{item.content}}</view>
+                        </view>
+                    </navigator>
+                </view>
+            </view>
+        </scroll-view>  
+    </swiper-item>
+    <swiper-item>
+        <scroll-view scroll-y="true" style="height: 100%;" scroll-top="{{scrollTop}}">
+            <view class="wrap">
+                <view class="item" wx:for="{{picModuleData}}">
+                    <navigator url="{{item.url}}">
+                        <view class="top">
+                            <view class="title">{{item.title}}</view>
+                            <view class="time">{{item.time}}</view>
+                        </view>
+                        <view class="content">
+                            <image id="{{index}}" class="icon" bindload='imgSuc' src="{{item.iconUrl}}" style="width:{{item.width}}px;height:{{item.height}}px"></image>
+                            <view class="text">{{item.content}}</view>
+                        </view>
+                    </navigator>
+                </view>
+            </view>
+        </scroll-view>  
+    </swiper-item>
+</swiper>
+
+
+
