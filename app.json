@@ -1,7 +1,6 @@
 {
   "pages":[
-    
-    "pages/laugh/laugh",
+    "pages/canvas/canvas",
     "pages/index/index"
   ],
   "window":{
