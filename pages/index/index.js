@@ -8,12 +8,12 @@ Page({
             {
                 title:'哈哈一笑',
                 url:'../laugh/laugh',
-                iconUrl:'../../img/icon1.png',
+                iconUrl:'../../img/hhyx.png',
                 desc:''
             },{
-                title:'test1',
-                url:'../laugh',
-                iconUrl:'../../img/icon2.png',
+                title:'你画我猜',
+                url:'../canvas/canvas',
+                iconUrl:'../../img/nhwc.png',
                 desc:''
             },{
                 title:'test1',
