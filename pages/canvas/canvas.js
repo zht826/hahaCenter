@@ -76,7 +76,7 @@ Page({
     },
     onLoad:function(options){
         wx.connectSocket({
-            url: 'ws://192.168.123.231:8090'
+            url: 'ws://koa.ngrok.zht88.top'
         })
         wx.onSocketOpen(function(res) {
             socketOpen = true;
