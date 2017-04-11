@@ -1,0 +1,28 @@
+<view class="top-bar">
+    <view class="my-info">
+        <image src="{{myInfo.iconUrl}}"></image>
+        <view class="my-name">{{myInfo.name}}</view>
+    </view>
+    <view class="create-room">新建房间</view>
+</view>
+<scroll-view scroll-y="true" style="height: 100%;" scroll-top="{{scrollTop}}">
+    <view class="listWrap">
+        <view class="room-item" wx:for="{{roomList}}">
+            <view class="room-name">{{item.name}}</view>
+            <view class="room-usercount">1/6</view>
+            <view class="join-room">加入房间</view>
+        </view>
+    </view>
+</scroll-view>
+<!--<view class="input">
+    <input type='text' bindinput="writeContent"/>
+    <view class="send" bindtap="sendAnswer" hover-class="send-hover">发送</view>
+</view>
+
+<view class="user-module">
+    <view class="user" wx:for="{{userList}}">
+        <view class="user-soccer">{{item.soccer}}分</view>
+        <view class="user-icon">{{item.firstName}}</view>
+        <view class="user-name">{{item.name}}</view>
+    </view>
+</view>-->
