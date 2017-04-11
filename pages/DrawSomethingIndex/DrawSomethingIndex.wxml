@@ -3,17 +3,27 @@
         <image src="{{myInfo.iconUrl}}"></image>
         <view class="my-name">{{myInfo.name}}</view>
     </view>
-    <view class="create-room">新建房间</view>
+    <view class="create-room" hover-class="hover-create-room" bindtap="createRoom" >新建房间</view>
 </view>
 <scroll-view scroll-y="true" style="height: 100%;" scroll-top="{{scrollTop}}">
-    <view class="listWrap">
+    <view class="list-wrap">
         <view class="room-item" wx:for="{{roomList}}">
             <view class="room-name">{{item.name}}</view>
-            <view class="room-usercount">1/6</view>
-            <view class="join-room">加入房间</view>
+            <view class="room-usercount">{{item.userCount}}/6</view>
+            <view class="join-room" hover-class="hover-join-room" bindtap="joinRoom" data-room-info='{{item}}'>加入房间</view>
         </view>
     </view>
 </scroll-view>
+
+<view class="create-panel" style="left:{{panelLeft}};">
+    <view class="top-bar">
+        <view class="cancel" bindtap="cancel">取消</view>
+        <view class="commit" hover-class="hover-commit" bindtap="commit" >完成</view>
+    </view>
+    <view class="input">
+        <input type='text' placeholder="请输入房间名" bindinput="writeContent"/>
+    </view>
+</view>
 <!--<view class="input">
     <input type='text' bindinput="writeContent"/>
     <view class="send" bindtap="sendAnswer" hover-class="send-hover">发送</view>

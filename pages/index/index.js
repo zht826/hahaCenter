@@ -12,7 +12,7 @@ Page({
                 desc:''
             },{
                 title:'你画我猜',
-                url:'../canvas/canvas',
+                url:'../DrawSomethingIndex/DrawSomethingIndex',
                 iconUrl:'../../img/nhwc.png',
                 desc:''
             },{

@@ -17,7 +17,20 @@ Page({
         myInfo:{
             name:'张海涛',
             iconUrl:''
-        }
+        },
+        roomList:[
+            {
+                name:'测试房间',
+                id:'000001',
+                userCount:1
+            },
+            {
+                name:'测试房间',
+                id:'000002',
+                userCount:2
+            }
+        ],
+        panelLeft:'100%'
     },
     onLoad:function(options){
         wx.connectSocket({
@@ -47,20 +60,23 @@ Page({
         // 生命周期函数--监听页面显示
 
     },
-    drawBegin:function(e){
+    onUnload:function(){
+        console.log('页面卸载了111');
+    },
+    createRoom:function(e){
         console.log(e);
-        draw({ sx: e.touches[0].x, sy: e.touches[0].y });
-        sendSocketMessage(JSON.stringify({ sx: e.touches[0].x, sy: e.touches[0].y }));
-    },
-    drawMove:function(e){
-        draw({ ex: e.touches[0].x, ey: e.touches[0].y });
-        sendSocketMessage(JSON.stringify({ ex: e.touches[0].x, ey: e.touches[0].y }));
-    },
-    writeContent:function(e){
-        var that = this;
-        // console.log(e.detail.value);
+        console.log('新建房间');
         this.setData({
-            inputText:e.detail.value
+            panelLeft:0,
+        })
+    },
+    joinRoom:function(e){
+        console.log('加入房间');
+        console.log(e);
+    },
+    cancel:function(){
+        this.setData({
+            panelLeft:'100%'
         })
     },
     sendAnswer:function(){
