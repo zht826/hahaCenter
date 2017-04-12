@@ -23,7 +23,6 @@ page{
     height: 60rpx;
     width: 60rpx;
     border-radius: 60rpx;
-    border: 1px solid #fff;
     float: left;
 }
 .top-bar .my-info .my-name{

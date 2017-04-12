@@ -15,16 +15,6 @@ Page({
                 url:'../DrawSomethingIndex/DrawSomethingIndex',
                 iconUrl:'../../img/nhwc.png',
                 desc:''
-            },{
-                title:'test1',
-                url:'../laugh',
-                iconUrl:'../../img/icon3.png',
-                desc:''
-            },{
-                title:'哈哈哈哈哈哈哈哈',
-                url:'../laugh',
-                iconUrl:'../../img/icon4.png',
-                desc:''
             },
         ]
     },

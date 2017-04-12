@@ -8,8 +8,8 @@
 <scroll-view scroll-y="true" style="height: 100%;" scroll-top="{{scrollTop}}">
     <view class="list-wrap">
         <view class="room-item" wx:for="{{roomList}}">
-            <view class="room-name">{{item.name}}</view>
-            <view class="room-usercount">{{item.userCount}}/6</view>
+            <view class="room-name">{{item.roomName}}</view>
+            <view class="room-usercount">{{item.user.length}}/6</view>
             <view class="join-room" hover-class="hover-join-room" bindtap="joinRoom" data-room-info='{{item}}'>加入房间</view>
         </view>
     </view>

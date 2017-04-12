@@ -92,7 +92,7 @@ Page({
             if(res.data == '答对了！！'){
                 wx.closeSocket();
             }else{
-                draw(JSON.parse(res.data));
+                
             }
             
         })
