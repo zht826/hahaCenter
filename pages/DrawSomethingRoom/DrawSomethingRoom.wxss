@@ -6,18 +6,123 @@ page{
     overflow: hidden;
     font-size: 40rpx;
 }
-#canvas{
+.top-bar{
+    height: 60rpx;
+    line-height: 80rpx;
+    background-color: #000;
+    padding: 20rpx 40rpx;
+}
+.top-bar .my-info{
+    height: 100%;
+    float: left;
+    font-size: 40rpx;
+    width: 500rpx;
+    text-align: left;
+}
+.top-bar .my-info image{
+    height: 60rpx;
+    width: 60rpx;
+    border-radius: 60rpx;
+    border: 1px solid #fff;
+    float: left;
+}
+.top-bar .my-info .my-name{
+    font-size: 30rpx;
+    color: #fff;
+    text-align: right;
+    height: 60rpx;
+    line-height: 60rpx;
+    float: left;
+    margin-left: 30rpx;
+}
+.top-bar .create-room{
+    height: 60rpx;
+    line-height: 60rpx;
+    float: right;
+    font-size: 30rpx;
+    padding: 0 15rpx;
+    color: #fff;
+    text-align: right;
+    border: 1px solid #fff;
+}
+.hover-create-room{
+    opacity: 0.6;
+}
+.wrap{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+scroll-view{
     width: 100%;
     height: 50%;
 }
+.list-wrap{
+    width: 100%;
+}
+.message-item{
+    width: 100%;
+    /*height: 120rpx;*/
+    line-height: 120rpx;
+    box-sizing: border-box;
+    padding: 20rpx 10rpx;
+    overflow: hidden;
+}
+.message-item .speaker-info{
+    float: left;
+    width: 80rpx;
+    height: 70rpx;
+    text-align: center;
+    line-height: 1;
+}
+.message-item .speaker-info.right,.message-item .message.right{
+    float: right;
+}
+.message-item .message.right{
+    background-color:#a3e9a4;
+}
+.message-item .speaker-info image{
+    width: 50rpx;
+    height: 50rpx;
+    border: 1px solid #000;
+}
+.message-item .speaker-info .speaker-name{
+    font-size: 20rpx;
+    color: #000;
+    height: 20rpx;
+}
+.message-item .message{
+    float: left;
+    width: 550rpx;
+    text-align: left;
+    line-height: 1.5;
+    border: 1px solid #000;
+    font-size: 30rpx;
+    padding: 10rpx;
+    background-color: #b3e5fc;
+}
+
+.user-wrap{
+    width: 100%;
+    height: 50%;
+    position: relative;
+    box-sizing: border-box;
+    padding-top: 80rpx;
+    overflow:hidden;
+}
 .input{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9999;
     width: 700rpx;
     height: 70rpx;
     border: 1px solid #000;
     text-align: left;
     padding: 5rpx 10rpx;
     margin-left: 15rpx;
-    margin-top: 20rpx;
+    margin-top: 10rpx;
+    background-color: #fff;
 }
 .input input{
     width: 550rpx;
@@ -40,16 +145,20 @@ page{
 .send-hover{
     opacity: 0.7;
 }
+
 .user-module{
-    width: 650rpx;
+    width: 750rpx;
     padding: 20rpx 50rpx;
+    box-sizing: border-box;
+    overflow: hidden;
+    height: 80%;
 }
 .user{
     width: 150rpx;
-    height: 200rpx;
     float: left;
     margin:0 33.3333333rpx;
     position: relative;
+    height: 50%;
 }
 .user .user-icon{
     width: 150rpx;
@@ -62,16 +171,4 @@ page{
 .user-name{
     font-size: 30rpx;
     margin-top: 10rpx;
-}
-.user-soccer{
-    position: absolute;
-    top: 0;
-    right: 0;
-    /*width: 60rpx;*/
-    height: 40rpx;
-    line-height: 40rpx;
-    font-size: 30rpx;
-    z-index: 99999999;
-    background-color:#ccc;
-    padding: 0 10rpx;
 }

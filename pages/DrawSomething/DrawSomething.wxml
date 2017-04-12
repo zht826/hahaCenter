@@ -1,14 +1,13 @@
 <canvas id="canvas" canvas-id="ws" bindtouchstart="drawBegin" bindtouchmove="drawMove" bindtouchend="drawEnd"/>
-
-<view class="input">
-    <input type='text' bindinput="writeContent"/>
-    <view class="send" bindtap="sendAnswer" hover-class="send-hover">发送</view>
-</view>
-
-<view class="user-module">
-    <view class="user" wx:for="{{userList}}">
-        <view class="user-soccer">{{item.soccer}}分</view>
-        <view class="user-icon">{{item.firstName}}</view>
-        <view class="user-name">{{item.name}}</view>
+<view class="user-wrap">
+    <view class="input">
+        <input type='text' bindinput="writeContent"/>
+        <view class="send" bindtap="sendAnswer" hover-class="send-hover">发送</view>
+    </view>
+    <view class="user-module">
+        <view class="user" wx:for="{{userList}}">
+            <view class="user-icon">{{item.firstName}}</view>
+            <view class="user-name">{{item.name}}</view>
+        </view>
     </view>
 </view>

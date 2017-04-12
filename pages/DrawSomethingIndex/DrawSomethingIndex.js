@@ -68,16 +68,31 @@ Page({
         console.log('新建房间');
         this.setData({
             panelLeft:0,
-        })
+        });
     },
-    joinRoom:function(e){
-        console.log('加入房间');
-        console.log(e);
+    commit:function(){
+        var that = this;
+        wx.navigateTo({
+            url: '../DrawSomethingRoom/DrawSomethingRoom',
+            success:function(){
+                that.setData({
+                    panelLeft:'100%'
+                });
+            }
+        });
+        
     },
     cancel:function(){
         this.setData({
             panelLeft:'100%'
-        })
+        });
+    },
+    joinRoom:function(e){
+        console.log('加入房间');
+        console.log(e);
+        wx.navigateTo({
+            url: '../DrawSomethingRoom/DrawSomethingRoom'
+        });
     },
     sendAnswer:function(){
         var that = this;

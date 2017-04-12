@@ -1,7 +1,8 @@
 {
   "pages":[
-    "pages/DrawSomethingIndex/DrawSomethingIndex",
+    
     "pages/DrawSomethingRoom/DrawSomethingRoom",
+    "pages/DrawSomethingIndex/DrawSomethingIndex",
     "pages/DrawSomething/DrawSomething",
     "pages/canvas/canvas",
     "pages/index/index",

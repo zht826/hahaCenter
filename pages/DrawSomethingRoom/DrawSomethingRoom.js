@@ -2,33 +2,6 @@ var app = getApp();
 var ex, ey;
 var socketOpen = false;
 var socketMsgQueue = [];
-function draw(data) {
-    var ctx = wx.createCanvasContext('ws');
-    var  e = data;
-    ctx.setFillStyle('grey');
-    ctx.setStrokeStyle("black");
-    ctx.setLineCap('round');
-    ctx.setLineJoin('round');
-    ctx.setLineWidth(5);
-    console.log(JSON.stringify(data));
-    if (e.sx && e.sy) {
-        ex = e.sx;
-        ey = e.sy;
-        console.log('开始画了'+JSON.stringify(e));
-        console.log(ex+','+ey);
-        ctx.beginPath();
-        ctx.moveTo(ex, ey);
-    }
-    if (e.ex && e.ey) {
-        console.log('移动了:'+ex+','+ey);
-        ctx.moveTo(ex, ey);
-        ctx.lineTo(e.ex, e.ey);
-        ctx.stroke();
-        ctx.draw(true);
-        ex = e.ex;
-        ey = e.ey;
-    }
-};
 function sendSocketMessage(msg) {
     if (socketOpen) {
         wx.sendSocketMessage({
@@ -41,6 +14,12 @@ function sendSocketMessage(msg) {
 Page({
     data:{
         inputText:'',
+        canvasLeft:'100%',
+        myInfo:{
+            name:'张海涛',
+            iconUrl:'',
+            isOwner:true
+        },
         userList:[
             {
                 firstName:'张',
@@ -72,6 +51,29 @@ Page({
                 name:'张海涛',
                 soccer:'1'
             }
+        ],
+        messageList:[
+            {
+                name:'哈哈',
+                iconUrl:'',
+                message:'哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈',
+                isMe:true
+            },{
+                name:'test',
+                iconUrl:'',
+                message:'哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈',
+                isMe:false
+            },{
+                name:'哈哈',
+                iconUrl:'',
+                message:'哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈',
+                isMe:true
+            },{
+                name:'test',
+                iconUrl:'',
+                message:'哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈',
+                isMe:false
+            }
         ]
     },
     onLoad:function(options){
@@ -102,14 +104,15 @@ Page({
         // 生命周期函数--监听页面显示
 
     },
-    drawBegin:function(e){
-        console.log(e);
-        draw({ sx: e.touches[0].x, sy: e.touches[0].y });
-        sendSocketMessage(JSON.stringify({ sx: e.touches[0].x, sy: e.touches[0].y }));
+    onUnload:function(){
+        console.log('页面卸载了111');
     },
-    drawMove:function(e){
-        draw({ ex: e.touches[0].x, ey: e.touches[0].y });
-        sendSocketMessage(JSON.stringify({ ex: e.touches[0].x, ey: e.touches[0].y }));
+    start:function(e){
+        console.log(e);
+        console.log('开始游戏');
+        wx.redirectTo({
+            url: '../DrawSomething/DrawSomething'
+        });
     },
     writeContent:function(e){
         var that = this;
