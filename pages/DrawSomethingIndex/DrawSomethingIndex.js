@@ -2,8 +2,10 @@ var app = getApp();
 var ex, ey;
 var socketOpen = false;
 var socketMsgQueue = [];
+var userInfo;
 function sendSocketMessage(msg) {
     if (socketOpen) {
+        console.log('sendMessage:'+msg);
         wx.sendSocketMessage({
             data:msg
         })
@@ -16,6 +18,7 @@ Page({
         inputText:'',
         myInfo:{
             name:'张海涛',
+            id:'',
             iconUrl:''
         },
         roomList:[
@@ -25,27 +28,47 @@ Page({
     onLoad:function(options){
         var that = this;
         //显示个人信息
-        this.setData({
-            myInfo:{
-                name:app.globalData.userInfo.nickName,
+        wx.getUserInfo({
+            success: function (res) {
+                console.log(res.userInfo);
+                app.globalData.userInfo = res.userInfo
+                that.setData({
+                    myInfo:{
+                        name:app.globalData.userInfo.nickName,
+                        id:app.globalData.openID,
+                        iconUrl:app.globalData.userInfo.avatarUrl
+                    }
+                });
+                //登录
+                userInfo = {
+                    userId:app.globalData.openID,
+                    userName:app.globalData.userInfo.nickName,
+                    iconUrl:app.globalData.userInfo.avatarUrl
+                }
+                wx.showLoading({
+                    title: '连接中',
+                    mask:true
+                });
+                wx.connectSocket({
+                    url: 'ws://koa.ngrok.zht88.top'
+                });
+            }
+        })
+        wx.onSocketOpen(function(res) {
+            userInfo = {
+                userId:app.globalData.openID,
+                userName:app.globalData.userInfo.nickName,
                 iconUrl:app.globalData.userInfo.avatarUrl
             }
-        });
-        wx.showLoading({
-            title: '连接中',
-            mask:true
-        });
-        wx.connectSocket({
-            url: 'ws://koa.ngrok.zht88.top'
-        });
-        wx.onSocketOpen(function(res) {
+            sendSocketMessage(JSON.stringify({
+                reqAction:'Login',
+                reqData:userInfo
+            }));
             wx.hideLoading();
             socketOpen = true;
-
             for (var i = 0; i < socketMsgQueue.length; i++){
                 sendSocketMessage(socketMsgQueue[i]);
             }
-
             socketMsgQueue = [];
         });
         wx.onSocketMessage(function(res) {
@@ -80,8 +103,11 @@ Page({
                     that.setData({
                         roomList:rspData.resultData.roomList
                     });
-                    if(rspData.resultData.ownerInfo.userName == that.data.myInfo.name){
-                        //自己试创建者，自动进入房间
+                    console.log('ownerInfo:'+rspData.resultData.ownerInfo.userId);
+                    console.log('myInfo'+that.data.myInfo.id);
+                    if(rspData.resultData.ownerInfo.userId == that.data.myInfo.id){
+                        //自己是创建者，自动进入房间
+                        console.log('自己试创建者，将自动进入房间');
                         wx.navigateTo({
                             url: '../DrawSomethingRoom/DrawSomethingRoom',
                             success:function(){
@@ -100,7 +126,27 @@ Page({
                         success: function(res) {
                             if (res.confirm) {
                                 console.log('用户点击确定');
-                                that.createRoom();
+                                // that.createRoom();
+                            } else if (res.cancel) {
+                                console.log('用户点击取消')
+                            }
+                        }
+                    })
+                }
+            }else if(rspData.respAction=='JoinRoom'){
+                if(rspData.respCode=='0000'){
+                    wx.navigateTo({
+                        url: '../DrawSomethingRoom/DrawSomethingRoom'
+                    });
+                }else{
+                    wx.showModal({
+                        title: '提示',
+                        content: rspData.respDesc,
+                        showCancel:false,
+                        confirmText:'确定',
+                        success: function(res) {
+                            if (res.confirm) {
+                                console.log('用户点击确定');
                             } else if (res.cancel) {
                                 console.log('用户点击取消')
                             }
@@ -115,16 +161,7 @@ Page({
         wx.onSocketClose(function(res) {
             console.log('WebSocket 已关闭！');
         });
-        //登录
-        let userInfo = {
-            userId:app.globalData.openID,
-            userName:app.globalData.userInfo.nickName,
-            iconUrl:app.globalData.userInfo.avatarUrl
-        }
-        sendSocketMessage(JSON.stringify({
-            reqAction:'Login',
-            reqData:userInfo
-        }));
+        
     },
     onShow:function(){
         // 生命周期函数--监听页面显示
@@ -146,6 +183,7 @@ Page({
             roomName:that.data.inputText
         }
         console.log(dataJson);
+        wx.setStorageSync('nowRoom', dataJson);
         sendSocketMessage(JSON.stringify({
             reqAction:'CreateRoom',
             reqData:dataJson
@@ -157,11 +195,14 @@ Page({
         });
     },
     joinRoom:function(e){
+        var that = this;
         console.log('加入房间');
-        console.log(e);
-        wx.navigateTo({
-            url: '../DrawSomethingRoom/DrawSomethingRoom'
-        });
+        console.log(e.target.dataset.roomInfo);
+        wx.setStorageSync('nowRoom', e.target.dataset.roomInfo);
+        sendSocketMessage(JSON.stringify({
+            reqAction:'JoinRoom',
+            reqData:e.target.dataset.roomInfo
+        }));
     },
     sendAnswer:function(){
         var that = this;

@@ -23,20 +23,17 @@ App({
               success:function(res){
                 console.log(res)
                 that.globalData.openID = res.data.openid;
+                
               },
               fail:function(err){
                 console.log(err)
               }
             })
+            
           } else {
             console.log('获取用户登录态失败！' + res.errMsg)
           }
-          wx.getUserInfo({
-            success: function (res) {
-              that.globalData.userInfo = res.userInfo
-              typeof cb == "function" && cb(that.globalData.userInfo)
-            }
-          })
+          
         }
       })
   },

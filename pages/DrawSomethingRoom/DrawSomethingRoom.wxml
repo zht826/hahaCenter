@@ -3,7 +3,7 @@
         <image src="{{myInfo.iconUrl}}"></image>
         <view class="my-name">{{myInfo.name}}</view>
     </view>
-    <view class="create-room" hover-class="hover-create-room" bindtap="start" >开始游戏</view>
+    <view class="create-room" wx:if="{{myInfo.isOwner}}" hover-class="hover-create-room" bindtap="start" >开始游戏</view>
 </view>
 <view class="wrap">
     <scroll-view scroll-y="true" style="height: 50%;" scroll-top="{{scrollTop}}">
