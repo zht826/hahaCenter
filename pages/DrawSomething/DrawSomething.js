@@ -42,36 +42,18 @@ function sendSocketMessage(msg) {
 Page({
     data:{
         inputText:'',
+        keyWord:'哈哈',
+        myInfo:{
+            name:'张海涛',
+            id:'',
+            iconUrl:'',
+            isOwner:false
+        },
         userList:[
             {
                 firstName:'张',
                 name:'张海涛',
-                soccer:'1'
-            },
-            {
-                firstName:'张',
-                name:'张海涛',
-                soccer:'1'
-            },
-            {
-                firstName:'张',
-                name:'张海涛',
-                soccer:'1'
-            },
-            {
-                firstName:'张',
-                name:'张海涛',
-                soccer:'1'
-            },
-            {
-                firstName:'张',
-                name:'张海涛',
-                soccer:'1'
-            },
-            {
-                firstName:'张',
-                name:'张海涛',
-                soccer:'1'
+                soccer:'0'
             }
         ]
     },
@@ -79,6 +61,17 @@ Page({
         var that = this;
         keyWord = options.keyWord;
         console.log(keyWord);
+        socketOpen = true;
+        that.setData({
+            myInfo:{
+                name:app.globalData.userInfo.nickName,
+                id:app.globalData.openID,
+                iconUrl:app.globalData.userInfo.avatarUrl,
+                isOwner:false
+            },
+            keyWord:keyWord
+        });
+
         sendSocketMessage(JSON.stringify({
             reqAction:'GetRoomInfo',
             reqData:wx.getStorageSync('nowRoom')
@@ -105,6 +98,7 @@ Page({
                     if(getUserList[i].userId == that.data.myInfo.id){
                         let info = that.data.myInfo;
                         info.isOwner = getUserList[i].roomInfo.isOwner;
+                        setUserList[i].name = '我';
                         that.setData({
                             myInfo:info
                         })
@@ -115,6 +109,7 @@ Page({
                 })
             }else if(rspData.respAction=='Draw'){
                 var drawData = rspData.resultData.drawData;
+                console.log('服务器Draw'+drawData);
                 draw(JSON.parse(drawData));
             }else if(rspData.respAction=='Answer'){
                 var result = rspData.resultData.result;
@@ -162,7 +157,7 @@ Page({
         
         let reqJson ={
             roomInfo:wx.getStorageSync('nowRoom'),
-            drawData:JSON.stringify({ sx: e.touches[0].x, sy: e.touches[0].y })
+            drawData:JSON.stringify({ ex: e.touches[0].x, ey: e.touches[0].y })
         }
         sendSocketMessage(JSON.stringify({
             reqAction:'Draw',
