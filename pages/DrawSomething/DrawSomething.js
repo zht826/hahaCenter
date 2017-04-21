@@ -55,7 +55,8 @@ Page({
                 name:'张海涛',
                 soccer:'0'
             }
-        ]
+        ],
+        time:'60'
     },
     onLoad:function(options){
         var that = this;
@@ -67,7 +68,8 @@ Page({
                 name:app.globalData.userInfo.nickName,
                 id:app.globalData.openID,
                 iconUrl:app.globalData.userInfo.avatarUrl,
-                isOwner:false
+                isOwner:false,
+                isDrawing:true
             },
             keyWord:keyWord
         });
@@ -129,6 +131,34 @@ Page({
                         }
                     })
                 }
+            }else if(rspData.respAction=='NextPlayer'){
+                var resultData = rspData.resultData;
+                that.setData({
+                    keyWord:resultData.keyWord
+                });
+                if(resultData.player.userId == that.data.myInfo.id){
+                    let info = that.data.myInfo;
+                    info.isDrawing = true;
+                    that.setData({
+                        myInfo:info
+                    })
+                }else{
+                    let info = that.data.myInfo;
+                    info.isDrawing = false;
+                    that.setData({
+                        myInfo:info
+                    })
+                }
+            }else if(rspData.respAction=='UpdateTime'){
+                var resultData = rspData.resultData;
+                that.setData({
+                    time:resultData.time
+                })
+            }else if(rspData.respAction=='GameOver'){
+                var resultData = rspData.resultData;
+                that.setData({
+                    time:'游戏结束'
+                })
             }
         })
         wx.onSocketClose(function(res) {

@@ -50,8 +50,8 @@ Page({
                     mask:true
                 });
                 wx.connectSocket({
-                    url: 'ws://192.168.123.231:3456'
-                    // url: 'ws://koa.ngrok.zht88.top'
+                    // url: 'ws://192.168.123.231:3456'
+                    url: 'ws://koa.ngrok.zht88.top'
                 });
             }
         })
@@ -72,6 +72,18 @@ Page({
             }
             socketMsgQueue = [];
         });
+        
+        wx.onSocketError(function(res){
+            console.log('WebSocket连接打开失败，请检查！')
+        });
+        wx.onSocketClose(function(res) {
+            console.log('WebSocket 已关闭！');
+        });
+        
+    },
+    onShow:function(){
+        var that = this;
+        // 生命周期函数--监听页面显示
         wx.onSocketMessage(function(res) {
             console.log('收到服务器内容：' + res.data);
             if(res.data == '答对了！！'){
@@ -154,19 +166,13 @@ Page({
                         }
                     })
                 }
+            }else if(rspData.respAction=='RoomList'){
+                //登录成功，收到广播列表
+                that.setData({
+                    roomList:rspData.resultData.roomList
+                });
             }
-        });
-        wx.onSocketError(function(res){
-            console.log('WebSocket连接打开失败，请检查！')
-        });
-        wx.onSocketClose(function(res) {
-            console.log('WebSocket 已关闭！');
-        });
-        
-    },
-    onShow:function(){
-        // 生命周期函数--监听页面显示
-
+        });1
     },
     onUnload:function(){
         console.log('页面卸载了111');

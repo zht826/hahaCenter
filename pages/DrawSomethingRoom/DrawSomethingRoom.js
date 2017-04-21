@@ -115,7 +115,7 @@ Page({
                 })
             }else if(rspData.respAction=='Start'){//有新用户加入
                 let keyWord = rspData.resultData.keyWord;
-                wx.redirectTo({
+                wx.navigateTo({
                     url: '../DrawSomething/DrawSomething?keyWord='+keyWord
                 });
             }
@@ -130,6 +130,13 @@ Page({
     },
     onUnload:function(){
         console.log('页面卸载了111');
+        let reqJson ={
+            roomInfo:wx.getStorageSync('nowRoom')
+        }
+        sendSocketMessage(JSON.stringify({
+            reqAction:'LeaveRoom',
+            reqData:reqJson
+        }));
     },
     start:function(e){
         console.log(e);

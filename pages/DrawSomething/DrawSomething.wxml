@@ -1,9 +1,9 @@
 <view class="top-bar">
-    <view class="scroll-message">123</view>
+    <view class="scroll-message">{{time}}</view>
 </view>
 <canvas id="canvas" canvas-id="ws" bindtouchstart="drawBegin" bindtouchmove="drawMove" bindtouchend="drawEnd"/>
 <view class="user-wrap">
-    <view class="input" wx:if="{{!myInfo.isOwner}}">
+    <view class="input" wx:if="{{!myInfo.isDrawing}}">
         <input type='text' bindinput="writeContent"/>
         <view class="send" bindtap="sendAnswer" hover-class="send-hover">发送</view>
     </view>
