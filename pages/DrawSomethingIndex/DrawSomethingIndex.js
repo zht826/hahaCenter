@@ -52,6 +52,7 @@ Page({
                 wx.connectSocket({
                     // url: 'ws://192.168.123.231:3456'
                     url: 'ws://koa.ngrok.zht88.top'
+                    // url: 'wss://ws.zht87.com'
                 });
             }
         })

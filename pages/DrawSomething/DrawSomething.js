@@ -114,21 +114,35 @@ Page({
                 console.log('服务器Draw'+drawData);
                 draw(JSON.parse(drawData));
             }else if(rspData.respAction=='Answer'){
-                var result = rspData.resultData.result;
-                if(result){
-                    wx.showModal({
-                        title: '提示',
-                        content: rspData.respDesc,
-                        showCancel:false,
-                        confirmText:'确定',
-                        success: function(res) {
-                            if (res.confirm) {
-                                console.log('用户点击确定');
-                                // that.createRoom();
-                            } else if (res.cancel) {
-                                console.log('用户点击取消')
-                            }
+                var data = rspData.resultData;
+                if(data.result){
+                    var userList = that.data.userList;
+                    for(var i =0;i<userList.length;i++){
+                        if(userList[i].name = data.userInfo.userName){
+                            userList[i].soccer++;
                         }
+                    }
+                    that.setData({
+                        userList:userList
+                    })
+                    if(data.isMe){
+                        wx.showToast({
+                            title: '恭喜，回答正确',
+                            icon: 'success',
+                            duration: 2000
+                        })
+                    }else{
+                        wx.showToast({
+                            title: '恭喜'+data.userInfo.userName+'，回答正确',
+                            icon: 'success',
+                            duration: 2000
+                        })
+                    }
+                }else{
+                    wx.showToast({
+                        title: data.userInfo.userName+'回答错误',
+                        icon: 'success',
+                        duration: 2000
                     })
                 }
             }else if(rspData.respAction=='NextPlayer'){
