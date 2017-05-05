@@ -28,7 +28,7 @@
     </scroll-view>
     <view class="user-wrap">
         <view class="input">
-            <input type='text' bindinput="writeContent"/>
+            <input type='text' value="{{inputText}}" bindinput="writeContent"/>
             <view class="send" bindtap="sendAnswer" hover-class="send-hover">发送</view>
         </view>
         <view class="user-module">

@@ -30,6 +30,11 @@ function draw(data) {
         ey = e.ey;
     }
 };
+function clearCanvas(){
+    var ctx = wx.createCanvasContext('ws');
+    // ctx.clearRect(0, 0, 1500, 1500)
+    ctx.draw();
+}
 function sendSocketMessage(msg) {
     if (socketOpen) {
         wx.sendSocketMessage({
@@ -47,7 +52,8 @@ Page({
             name:'张海涛',
             id:'',
             iconUrl:'',
-            isOwner:false
+            isOwner:false,
+            isDrawing:false
         },
         userList:[
             {
@@ -56,7 +62,7 @@ Page({
                 soccer:'0'
             }
         ],
-        time:'60'
+        time:''
     },
     onLoad:function(options){
         var that = this;
@@ -146,6 +152,7 @@ Page({
                     })
                 }
             }else if(rspData.respAction=='NextPlayer'){
+                clearCanvas();
                 var resultData = rspData.resultData;
                 that.setData({
                     keyWord:resultData.keyWord
@@ -185,39 +192,44 @@ Page({
     },
     drawBegin:function(e){
         console.log(e);
-        draw({ sx: e.touches[0].x, sy: e.touches[0].y });
-
-        let reqJson ={
-            roomInfo:wx.getStorageSync('nowRoom'),
-            drawData:JSON.stringify({ sx: e.touches[0].x, sy: e.touches[0].y })
+        var that = this;
+        let info = that.data.myInfo;
+        if(info.isDrawing){
+            draw({ sx: e.touches[0].x, sy: e.touches[0].y });
+            let reqJson ={
+                roomInfo:wx.getStorageSync('nowRoom'),
+                drawData:JSON.stringify({ sx: e.touches[0].x, sy: e.touches[0].y })
+            }
+            sendSocketMessage(JSON.stringify({
+                reqAction:'Draw',
+                reqData:reqJson
+            }));
         }
-        sendSocketMessage(JSON.stringify({
-            reqAction:'Draw',
-            reqData:reqJson
-        }));
+        
     },
     drawMove:function(e){
-        draw({ ex: e.touches[0].x, ey: e.touches[0].y });
-        
-        let reqJson ={
-            roomInfo:wx.getStorageSync('nowRoom'),
-            drawData:JSON.stringify({ ex: e.touches[0].x, ey: e.touches[0].y })
+        var that = this;
+        let info = that.data.myInfo;
+        if(info.isDrawing){
+            draw({ ex: e.touches[0].x, ey: e.touches[0].y });
+            let reqJson ={
+                roomInfo:wx.getStorageSync('nowRoom'),
+                drawData:JSON.stringify({ ex: e.touches[0].x, ey: e.touches[0].y })
+            }
+            sendSocketMessage(JSON.stringify({
+                reqAction:'Draw',
+                reqData:reqJson
+            }));
         }
-        sendSocketMessage(JSON.stringify({
-            reqAction:'Draw',
-            reqData:reqJson
-        }));
     },
     writeContent:function(e){
         var that = this;
-        // console.log(e.detail.value);
         this.setData({
             inputText:e.detail.value
         })
     },
     sendAnswer:function(){
         var that = this;
-        // sendSocketMessage(that.data.inputText);
         let reqJson ={
             roomInfo:wx.getStorageSync('nowRoom'),
             answer:that.data.inputText
@@ -226,5 +238,8 @@ Page({
             reqAction:'Answer',
             reqData:reqJson
         }));
+        this.setData({
+            inputText:''
+        })
     }
 })

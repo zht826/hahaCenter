@@ -177,5 +177,8 @@ Page({
             reqAction:'Chat',
             reqData:reqJson
         }));
+        that.setData({
+            inputText:''
+        })
     }
 })

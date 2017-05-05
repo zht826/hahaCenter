@@ -4,7 +4,7 @@
 <canvas id="canvas" canvas-id="ws" bindtouchstart="drawBegin" bindtouchmove="drawMove" bindtouchend="drawEnd"/>
 <view class="user-wrap">
     <view class="input" wx:if="{{!myInfo.isDrawing}}">
-        <input type='text' bindinput="writeContent"/>
+        <input type='text' value="{{inputText}}" bindinput="writeContent"/>
         <view class="send" bindtap="sendAnswer" hover-class="send-hover">发送</view>
     </view>
     <view class="draw-panel" wx:else>
